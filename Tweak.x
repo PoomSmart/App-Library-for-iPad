@@ -18,7 +18,6 @@
 
 @interface SBHLibraryPodFolderControllerConfiguration : SBFolderControllerConfiguration
 @end
-@end
 
 %hook SBIconController
 
