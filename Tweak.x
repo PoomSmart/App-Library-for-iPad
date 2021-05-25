@@ -7,10 +7,17 @@
 @interface SBHLibrarySearchController : UIViewController
 @end
 
-@interface SBRootFolderControllerConfiguration : NSObject
+@interface SBFolderControllerConfiguration : NSObject
+@property (assign, nonatomic) NSUInteger allowedOrientations;
+@end
+
+@interface SBRootFolderControllerConfiguration : SBFolderControllerConfiguration
 @property NSUInteger folderPageManagementAllowedOrientations;
 @property NSUInteger ignoresOverscrollOnLastPageOrientations;
-@property NSUInteger sidebarAllowedOrientations;
+@end
+
+@interface SBHLibraryPodFolderControllerConfiguration : SBFolderControllerConfiguration
+@end
 @end
 
 %hook SBIconController
@@ -25,9 +32,16 @@
 
 - (void)iconManager:(SBHIconManager *)iconManager willUseRootFolderControllerConfiguration:(SBRootFolderControllerConfiguration *)configuration {
     %orig;
-    configuration.sidebarAllowedOrientations = 30;
     configuration.folderPageManagementAllowedOrientations = 30;
     configuration.ignoresOverscrollOnLastPageOrientations = 30;
+}
+
+%end
+
+%hook SBHLibraryPodFolderControllerConfiguration
+
+- (void)setAllowedOrientations:(NSUInteger)orientation {
+    %orig(30);
 }
 
 %end
